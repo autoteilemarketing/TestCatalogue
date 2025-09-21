@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Catalogue Filtre à Huile</title>
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Turn.js محلي -->
+  <script src="js/turn.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #e6e6e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #flipbook {
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      background: white;
+    }
+    .page {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="flipbook">
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-00.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-01.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-02.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-03.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-04.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-05.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-06.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-07.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-08.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-09.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-10.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-11.jpg')"></div>
+    <div class="page" style="background-image:url('pdf_pages/Fiche technique-12.jpg')"></div>
+  </div>
+
+  <script>
+    function initFlipbook() {
+      var w = window.innerWidth;
+      var flipbook = $("#flipbook");
+
+      // إذا كان مفعّل من قبل → ندمّروه
+      if (flipbook.data("turn")) {
+        flipbook.turn("destroy");
+      }
+
+      if (w > 900) {
+        // 📌 PC: صفحتين
+        flipbook.turn({
+          width: 960,   // (480 × 2)
+          height: 850,
+          display: 'double',  // مهم جدًا
+          autoCenter: true,
+          elevation: 50,
+          gradients: true
+        });
+        $(".page").css({ width: "480px", height: "850px" });
+      } else {
+        // 📌 موبايل: صفحة واحدة
+        flipbook.turn({
+          width: 480,
+          height: 850,
+          display: 'single',  // إجباري صفحة واحدة
+          autoCenter: true,
+          elevation: 50,
+          gradients: true
+        });
+        $(".page").css({ width: "480px", height: "850px" });
+      }
+    }
+
+    $(document).ready(initFlipbook);
+    $(window).resize(initFlipbook);
+  </script>
+</body>
+</html>
