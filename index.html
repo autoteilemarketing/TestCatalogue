@@ -12,55 +12,21 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #dcdcdc, #f5f5f5);
+      background: #e6e6e6;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      font-family: Arial, sans-serif;
     }
-
     #flipbook {
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
       background: white;
     }
-
     .page {
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-    }
-
-    /* أزرار التنقل */
-    .nav-buttons {
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .nav-buttons button {
-      background: #333;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .nav-buttons button:hover {
-      background: #555;
-    }
-
-    /* شريط الصفحات */
-    .page-indicator {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #333;
     }
   </style>
 </head>
@@ -81,22 +47,12 @@
     <div class="page" style="background-image:url('pdf_pages/Fiche technique-12.jpg')"></div>
   </div>
 
-  <!-- أزرار التنقل -->
-  <div class="nav-buttons">
-    <button id="prev">⬅️ Précédent</button>
-    <button id="next">➡️ Suivant</button>
-  </div>
-
-  <!-- شريط الصفحات -->
-  <div class="page-indicator">
-    Page <span id="current-page">1</span> / <span id="total-pages">13</span>
-  </div>
-
   <script>
     function initFlipbook() {
       var w = window.innerWidth;
       var flipbook = $("#flipbook");
 
+      // إذا كان مفعّل من قبل → ندمّروه
       if (flipbook.data("turn")) {
         flipbook.turn("destroy");
       }
@@ -104,7 +60,7 @@
       if (w > 900) {
         // 📌 PC: صفحتين
         flipbook.turn({
-          width: 960,   // (480 × 2)
+          width: 960,
           height: 850,
           display: 'double',
           autoCenter: true,
@@ -125,15 +81,18 @@
         $(".page").css({ width: "480px", height: "850px" });
       }
 
-      // تحديث شريط الصفحات
-      flipbook.bind("turned", function(event, page) {
-        $("#current-page").text(page);
-      });
+      // 🔎 دعم الروابط مثل #p=5
+      var hash = window.location.hash;
+      if (hash.startsWith("#p=")) {
+        var page = parseInt(hash.replace("#p=", ""));
+        if (!isNaN(page)) {
+          flipbook.turn("page", page);
+        }
+      }
+    }
 
-      $("#total-pages").text(flipbook.turn("pages"));
-
-      // أزرار التنقل
-      $("#prev").off("click").on("click", function() {
-        flipbook.turn("previous");
-      });
-      $("#next").off("cl
+    $(document).ready(initFlipbook);
+    $(window).resize(initFlipbook);
+  </script>
+</body>
+</html>
