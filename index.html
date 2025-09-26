@@ -14,6 +14,7 @@
       margin: 0;
       background: #e6e6e6;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -27,6 +28,24 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+    }
+    /* أزرار التنقّل */
+    #controls {
+      margin-top: 10px;
+    }
+    .btn {
+      font-size: 24px;
+      padding: 8px 20px;
+      margin: 0 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #555;
     }
   </style>
 </head>
@@ -47,6 +66,12 @@
     <div class="page" style="background-image:url('pdf_pages/Fiche technique-12.jpg')"></div>
   </div>
 
+  <!-- أزرار التحكم -->
+  <div id="controls">
+    <button class="btn" id="prev">◀</button>
+    <button class="btn" id="next">▶</button>
+  </div>
+
   <script>
     function initFlipbook() {
       var w = window.innerWidth;
@@ -60,7 +85,7 @@
       if (w > 900) {
         // 📌 PC: صفحتين
         flipbook.turn({
-          width: 960,
+          width: 960,   // (480 × 2)
           height: 850,
           display: 'double',
           autoCenter: true,
@@ -80,18 +105,20 @@
         });
         $(".page").css({ width: "480px", height: "850px" });
       }
-
-      // 🔎 دعم الروابط مثل #p=5
-      var hash = window.location.hash;
-      if (hash.startsWith("#p=")) {
-        var page = parseInt(hash.replace("#p=", ""));
-        if (!isNaN(page)) {
-          flipbook.turn("page", page);
-        }
-      }
     }
 
-    $(document).ready(initFlipbook);
+    $(document).ready(function () {
+      initFlipbook();
+
+      // أزرار التنقّل
+      $("#prev").click(function () {
+        $("#flipbook").turn("previous");
+      });
+      $("#next").click(function () {
+        $("#flipbook").turn("next");
+      });
+    });
+
     $(window).resize(initFlipbook);
   </script>
 </body>
