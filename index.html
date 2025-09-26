@@ -12,7 +12,7 @@
   <style>
     body {
       margin: 0;
-      background: #e6e6e6;
+      background: #000000; /* 🔥 خلفية سوداء */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -21,8 +21,8 @@
       overflow: hidden;
     }
     #flipbook {
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      background: white;
+      box-shadow: 0 0 25px rgba(255,255,255,0.3); /* ظل خفيف أبيض */
+      background: black; /* تأكيد أن خلفية الكتاب سوداء */
     }
     .page {
       background-size: cover;
@@ -37,15 +37,15 @@
       font-size: 24px;
       padding: 8px 20px;
       margin: 0 20px;
-      background: #333;
+      background: #111;
       color: white;
-      border: none;
+      border: 1px solid #555;
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s;
     }
     .btn:hover {
-      background: #555;
+      background: #333;
     }
   </style>
 </head>
@@ -77,7 +77,6 @@
       var w = window.innerWidth;
       var flipbook = $("#flipbook");
 
-      // إذا كان مفعّل من قبل → ندمّروه
       if (flipbook.data("turn")) {
         flipbook.turn("destroy");
       }
@@ -85,7 +84,7 @@
       if (w > 900) {
         // 📌 PC: صفحتين
         flipbook.turn({
-          width: 960,   // (480 × 2)
+          width: 960,
           height: 850,
           display: 'double',
           autoCenter: true,
@@ -110,7 +109,7 @@
     $(document).ready(function () {
       initFlipbook();
 
-      // أزرار التنقّل
+      // أزرار التنقل
       $("#prev").click(function () {
         $("#flipbook").turn("previous");
       });
